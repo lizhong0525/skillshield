@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      # No third-party dependencies: stdlib only. pytest is installed for the
+      # test runner; the same suite also passes under `python -m unittest`.
+      - name: Install test runner
+        run: python -m pip install pytest
+      - name: Run tests
+        run: python -m pytest -q
+      - name: Self-scan (gate on severity threshold)
+        run: python -m skillshield tests/fixtures/clean_skill --fail-on high
