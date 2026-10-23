@@ -9,7 +9,7 @@ Static security scanner for AI-agent skill folders: point it at a local skill di
 Pure Python 3.9+ standard library. No dependencies, no network access, no API keys.
 
 ```bash
-git clone https://github.com/example/skillshield.git
+git clone <this repository's URL> skillshield
 cd skillshield
 pip install .          # optional, but lets you run it from any directory
 ```
@@ -92,5 +92,6 @@ The step fails (exit 1) only when a finding meets the `--fail-on` threshold.
 ## Development
 
 ```bash
-python -m pytest -q   # 41 tests, no network needed
+pip install pytest     # the only dev dependency; the tool itself is stdlib-only
+python -m pytest -q    # 42 tests, no network needed
 ```
