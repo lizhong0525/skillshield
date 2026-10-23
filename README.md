@@ -4,13 +4,24 @@ Static security scanner for AI-agent skill folders: point it at a local skill di
 
 **Who it's for:** anyone about to install a third-party "skill" (a folder of `SKILL.md` instructions plus scripts) into an AI agent, and registry/CI maintainers who want an automated first-pass gate.
 
+## Installation
+
+Pure Python 3.9+ standard library. No dependencies, no network access, no API keys.
+
+```bash
+git clone https://github.com/example/skillshield.git
+cd skillshield
+pip install .          # optional, but lets you run it from any directory
+```
+
+Without `pip install .`, run the commands below from the cloned repo root —
+`python -m skillshield` needs the `skillshield/` package on the import path.
+
 ## Quickstart
 
 ```bash
-python -m skillshield path/to/skill-folder
+python -m skillshield path/to/skill-folder   # or just: skillshield path/to/skill-folder
 ```
-
-Pure Python 3.9+ standard library. No dependencies, no network access, no API keys.
 
 ## Demo (included fixtures)
 
