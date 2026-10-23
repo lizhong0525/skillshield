@@ -12,12 +12,14 @@ def hits(rule_id, lines, ext=".sh"):
 class TestDestructive(unittest.TestCase):
     def test_true_positives(self):
         for line in ["rm -rf /", "rm -rf ~/", "rm -fr $HOME/", "rm -rf /*",
+                     "rm -rf ~/  # cleanup", "rm -rf / # wipe everything",
                      "mkfs.ext4 /dev/sda1", "dd if=/dev/zero of=/dev/sda",
                      ":(){ :|:& };:"]:
             self.assertTrue(hits("SS-DESTRUCT-001", [line]), line)
 
     def test_false_positives(self):
         for line in ["rm -rf ./build", "rm -rf node_modules",
+                     "rm -rf ./build  # clean artifacts",
                      "rm -f output.tmp", "rm -r ./dist/"]:
             self.assertFalse(hits("SS-DESTRUCT-001", [line]), line)
 

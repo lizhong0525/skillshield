@@ -42,6 +42,14 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    # Consoles with a narrow codepage (e.g. GBK on Windows) must not crash on
+    # non-ASCII evidence: fall back to replacement characters when printing.
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(errors="replace")
+        except (AttributeError, ValueError, OSError):
+            pass
+
     args = build_parser().parse_args(argv)
 
     try:

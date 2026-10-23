@@ -35,7 +35,7 @@ def render_text(result: ScanResult, threshold: str) -> str:
     lines.append("")
 
     if not result.findings:
-        lines.append("No findings above information level were detected.")
+        lines.append("No findings detected.")
     for f in result.findings:
         loc = f"{f.path}:{f.line}" if f.line else f.path
         heur = " [heuristic]" if f.heuristic else ""

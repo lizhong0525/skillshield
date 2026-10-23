@@ -116,6 +116,22 @@ class TestCli(unittest.TestCase):
             payload = json.loads(out.read_text(encoding="utf-8"))
             self.assertEqual(payload["verdict"], "pass")
 
+    def test_non_ascii_evidence_does_not_crash_narrow_console(self):
+        # A flagged line containing characters outside the console codepage
+        # (e.g. GBK on Windows) must still print a report, not a traceback.
+        import os
+        with tempfile.TemporaryDirectory() as tmp:
+            Path(tmp, "evil.sh").write_text(
+                "#!/bin/bash\nrm -rf ~/  # \U0001f525\n", encoding="utf-8")
+            env = dict(os.environ, PYTHONIOENCODING="gbk")
+            proc = subprocess.run(
+                [sys.executable, "-m", "skillshield", tmp],
+                capture_output=True, text=True, cwd=PROJECT_ROOT, env=env,
+                encoding="gbk", errors="replace")
+            self.assertEqual(proc.returncode, 1, proc.stderr)
+            self.assertNotIn("Traceback", proc.stderr)
+            self.assertIn("SS-DESTRUCT-001", proc.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

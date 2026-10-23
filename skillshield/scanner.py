@@ -22,10 +22,7 @@ def _read_text(path: Path) -> str | None:
     try:
         return data.decode("utf-8", errors="strict")
     except UnicodeDecodeError:
-        try:
-            return data.decode("utf-8", errors="replace")
-        except Exception:
-            return None
+        return data.decode("utf-8", errors="replace")
 
 
 def scan_directory(root: str | os.PathLike) -> ScanResult:

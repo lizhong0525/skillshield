@@ -60,7 +60,7 @@ RULE_DESTRUCTIVE = Rule(
 )
 
 DESTRUCTIVE_PATTERNS = [
-    re.compile(r"\brm\s+(-[a-zA-Z]*r[a-zA-Z]*f|-[a-zA-Z]*f[a-zA-Z]*r)\s+[^|;]*(/|~|\$HOME|\*)\s*($|[;&|])"),
+    re.compile(r"\brm\s+(-[a-zA-Z]*r[a-zA-Z]*f|-[a-zA-Z]*f[a-zA-Z]*r)\s+[^|;]*(/|~|\$HOME|\*)\s*($|[;&|]|\s+#)"),
     re.compile(r"\brm\s+-[a-zA-Z]+\s+/(\s|$)"),
     re.compile(r"\bmkfs(\.|\s)"),
     re.compile(r"\bdd\s+.*\bof=/dev/"),
